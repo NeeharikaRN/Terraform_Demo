@@ -70,6 +70,7 @@ pipeline {
         stage('ACTION'){
             steps {
                 script {
+		    withCredentials([usernamePassword(credentialsId: 'aws-key', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     // Request user input
                     def userInput = input(
                         message: 'What do you want to do?',
@@ -87,6 +88,7 @@ pipeline {
                         bat 'terraform destroy -auto-approve'
                     }
                 }
+		}
             }
         }
         
