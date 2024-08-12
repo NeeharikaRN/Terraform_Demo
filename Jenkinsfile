@@ -82,9 +82,9 @@ pipeline {
                     env.USER_ACTION = userInput
 
 		    if (env.USER_ACTION == 'apply') {
-                        sh 'terraform apply -auto-approve tfplan'
+                        bat 'terraform apply -auto-approve tfplan'
                     } else if (env.USER_ACTION == 'destroy') {
-                        sh 'terraform destroy -auto-approve'
+                        bat 'terraform destroy -auto-approve'
                     }
                 }
             }
