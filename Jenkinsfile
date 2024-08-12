@@ -57,11 +57,34 @@ pipeline {
             }
         }
         
-        stage('APPLY') {
+        /* stage('APPLY') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'aws-key', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         bat 'terraform apply "s3.tfplan"'
+                    }
+                }
+            }
+        } */
+
+        stage('ACTION'){
+            steps {
+                script {
+                    // Request user input
+                    def userInput = input(
+                        message: 'What do you want to do?',
+                        parameters: [
+                            choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Select the action to perform')
+                        ]
+                    )
+                    
+                    // Store the user's choice
+                    env.USER_ACTION = userInput
+
+		    if (env.USER_ACTION == 'apply') {
+                        sh 'terraform apply -auto-approve tfplan'
+                    } else if (env.USER_ACTION == 'destroy') {
+                        sh 'terraform destroy -auto-approve'
                     }
                 }
             }
