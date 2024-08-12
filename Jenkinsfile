@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Terraform Project') {
             steps {
-                git branch: 'main', url: 'https://github.com/NeeharikaRN/Terraform_Jenkins_CICD.git'
+                git branch: 'main', url: 'https://github.com/NeeharikaRN/Terraform_Demo.git'
             }
         }
         
